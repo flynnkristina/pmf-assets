@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partnership Intelligence — MSCI | Private Markets Forum</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', -apple-system, system-ui, sans-serif; color: #FFFFFF; background: #090C2A; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  .epw { padding: 48px 40px; max-width: 880px; margin: 0 auto; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+  /* Header */
+  .ep-header { margin-bottom: 44px; }
+  .ep-tag { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: #7B8FFF; font-weight: 700; margin-bottom: 12px; }
+  .ep-title { font-size: 52px; font-weight: 800; color: #FFFFFF; letter-spacing: -2.5px; line-height: 0.95; margin-bottom: 8px; }
+  .ep-subtitle { font-size: 13px; color: #9B9CA3; font-weight: 500; letter-spacing: 0.3px; }
+  .ep-meta { display: flex; gap: 20px; margin-top: 16px; align-items: center; }
+  .ep-meta-item { font-size: 12px; color: #7E7F86; letter-spacing: 0.3px; }
+  .ep-meta-sep { width: 1px; height: 12px; background: #3A3B42; }
+
+  /* Section headers */
+  .ep-section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; margin-top: 52px; }
+  .ep-section-num { font-size: 13px; font-weight: 700; color: #090C2A; background: #7B8FFF; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .ep-section-label { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: #7B8FFF; font-weight: 700; }
+  .ep-section-line { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(123,143,255,0.3), transparent); }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 28px; list-style: none; }
+  .timeline::before { content: ''; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 1px; background: linear-gradient(to bottom, #9B9CA3, #D4AA78, #7B8FFF); }
+  .tl-item { position: relative; margin-bottom: 26px; }
+  .tl-item:last-child { margin-bottom: 0; }
+  .tl-dot { position: absolute; left: -24px; top: 6px; width: 11px; height: 11px; border-radius: 50%; border: 2px solid; }
+  .tl-dot-early { border-color: #9B9CA3; background: rgba(155,156,163,0.15); }
+  .tl-dot-mid { border-color: #D4AA78; background: rgba(212,170,120,0.15); }
+  .tl-dot-late { border-color: #7B8FFF; background: rgba(123,143,255,0.15); }
+  .tl-date { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; margin-bottom: 4px; }
+  .tl-date-early { color: #9B9CA3; }
+  .tl-date-mid { color: #D4AA78; }
+  .tl-date-late { color: #7B8FFF; }
+  .tl-event { font-size: 15px; color: rgba(255,255,255,0.93); line-height: 1.5; font-weight: 500; }
+  .tl-detail { font-size: 12px; color: #8B8C93; line-height: 1.6; margin-top: 4px; }
+  .tl-signal { font-size: 12px; color: #9B9CA3; font-style: italic; margin-top: 6px; padding-left: 12px; border-left: 2px solid rgba(123,143,255,0.25); }
+
+  /* Qualifying language shift */
+  .ql-track { display: flex; align-items: center; gap: 0; margin: 32px 0 8px; padding: 20px 24px; background: #0F1238; border-radius: 6px; border: 1px solid rgba(123,143,255,0.12); }
+  .ql-stage { flex: 1; text-align: center; padding: 0 8px; }
+  .ql-word { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.93); margin-bottom: 4px; }
+  .ql-when { font-size: 11px; color: #7E7F86; letter-spacing: 0.5px; }
+  .ql-arrow { color: #7B8FFF; font-size: 18px; padding: 0 4px; flex-shrink: 0; }
+  .ql-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #D4AA78; font-weight: 700; text-align: center; margin-bottom: 6px; }
+
+  /* Engagement density bar */
+  .density { margin: 28px 0; }
+  .density-bar { display: flex; gap: 3px; margin-bottom: 8px; }
+  .density-block { height: 28px; border-radius: 3px; flex: 1; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 600; letter-spacing: 0.5px; color: rgba(255,255,255,0.45); }
+  .density-labels { display: flex; justify-content: space-between; }
+  .density-label { font-size: 11px; color: #5C5D64; }
+
+  /* Mirror pair */
+  .mirror { position: relative; display: grid; grid-template-columns: 1fr 60px 1fr; gap: 0; margin: 36px 0; padding: 36px 28px; background: radial-gradient(130% 130% at 50% 0%, #090C2A 62.8%, #0D1DCC 100%); border-radius: 8px; border: 1px solid rgba(255,255,255,0.04); overflow: hidden; }
+  .mirror-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 140px; font-weight: 800; color: #FFFFFF; opacity: 0.02; letter-spacing: -8px; pointer-events: none; }
+  .mirror-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; font-weight: 700; margin-bottom: 6px; }
+  .mirror-label-before { color: #9B9CA3; }
+  .mirror-label-after { color: #7B8FFF; }
+  .mirror-date { font-size: 11px; letter-spacing: 1px; color: #5C5D64; margin-bottom: 14px; text-transform: uppercase; }
+  .mirror-q { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: #9B9CA3; margin-bottom: 12px; font-weight: 600; }
+  .mirror-a-before { color: rgba(255,255,255,0.8); font-style: italic; font-size: 18px; font-weight: 300; line-height: 1.45; }
+  .mirror-a-after { color: rgba(255,255,255,0.93); font-weight: 400; font-size: 15px; line-height: 1.55; }
+  .mirror-note { font-size: 11px; color: #5C5D64; margin-top: 12px; }
+  .mirror-center { display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; z-index: 1; }
+  .mirror-line { flex: 1; width: 1px; background: linear-gradient(to bottom, rgba(155,156,163,0.25), rgba(123,143,255,0.25)); }
+  .mirror-badge { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #7B8FFF; font-weight: 700; writing-mode: vertical-lr; text-orientation: mixed; padding: 8px 0; opacity: 0.7; }
+
+  /* Section 2: Intelligence access */
+  .query-row { display: grid; grid-template-columns: 4px 1fr; gap: 22px; padding: 22px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .query-row:first-of-type { border-top: 1px solid rgba(255,255,255,0.04); }
+  .query-bar { width: 4px; border-radius: 2px; opacity: 0.45; }
+  .query-q { font-size: 14px; color: #9B9CA3; font-style: italic; margin-bottom: 10px; line-height: 1.55; }
+  .query-a { font-size: 14px; color: rgba(255,255,255,0.88); line-height: 1.6; }
+  .query-source { font-size: 11px; color: #5C5D64; margin-top: 8px; letter-spacing: 0.3px; }
+
+  /* Stats row */
+  .stats { display: flex; gap: 40px; margin: 36px 0; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.04); }
+  .stat-num { font-size: 28px; font-weight: 700; line-height: 1; opacity: 0.8; }
+  .stat-label { font-size: 11px; color: #5C5D64; letter-spacing: 1px; text-transform: uppercase; margin-top: 6px; font-weight: 500; }
+
+  /* Footer */
+  .ep-footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.04); display: flex; justify-content: space-between; align-items: flex-end; }
+  .ep-footer-note { font-size: 11px; color: #5C5D64; max-width: 420px; line-height: 1.6; }
+  .ep-footer-brand { font-size: 11px; color: #5C5D64; letter-spacing: 1px; text-transform: uppercase; font-weight: 600; }
+
+  @media (max-width: 680px) {
+    .epw { padding: 32px 20px; }
+    .ep-title { font-size: 36px; }
+    .ep-meta { flex-wrap: wrap; gap: 10px; }
+    .mirror { grid-template-columns: 1fr; gap: 24px; padding: 24px 20px; }
+    .mirror-center { flex-direction: row; padding: 12px 0; }
+    .mirror-line { height: 1px; width: 100%; flex: 1; }
+    .mirror-badge { writing-mode: horizontal-tb; }
+    .mirror div:first-of-type { text-align: left; padding-right: 0; }
+    .ql-track { flex-direction: column; gap: 16px; }
+    .ql-arrow { transform: rotate(90deg); }
+  }
+</style>
+</head>
+<body>
+
+<div class="epw">
+  <h2 class="sr-only">MSCI Partnership Intelligence: engagement progression and intelligence access demonstration for Private Markets Forum</h2>
+
+  <div style="height: 2px; background: linear-gradient(90deg, #090C2A, #0D1DCC 50%, #7B8FFF); margin: -48px -40px 40px;" role="presentation"></div>
+
+  <!-- HEADER -->
+  <header class="ep-header">
+    <div class="ep-tag">Partnership Intelligence</div>
+    <div class="ep-title">MSCI</div>
+    <div class="ep-subtitle">Your engagement with Private Markets Forum</div>
+    <div class="ep-meta" aria-label="Engagement summary">
+      <span class="ep-meta-item">March &mdash; October 2025</span>
+      <span class="ep-meta-sep" role="presentation"></span>
+      <span class="ep-meta-item">8 touchpoints</span>
+      <span class="ep-meta-sep" role="presentation"></span>
+      <span class="ep-meta-item">5 intelligence sources</span>
+    </div>
+  </header>
+
+  <!-- SECTION 1 -->
+  <div class="ep-section-header" role="heading" aria-level="3">
+    <div class="ep-section-num" aria-hidden="true">1</div>
+    <div class="ep-section-label">Your Engagement Arc</div>
+    <div class="ep-section-line" role="presentation"></div>
+  </div>
+
+  <ol class="timeline" aria-label="MSCI engagement timeline with Private Markets Forum">
+    <li class="tl-item">
+      <div class="tl-dot tl-dot-early" aria-hidden="true"></div>
+      <div class="tl-date tl-date-early">March 2025</div>
+      <div class="tl-event">Silicon Valley Private Credit Summit registration</div>
+      <div class="tl-detail">Head of Data Infrastructure. Interest areas: portfolio analytics, LP reporting automation. Priority tracks: Private Credit, Data &amp; Analytics.</div>
+    </li>
+
+    <li class="tl-item">
+      <div class="tl-dot tl-dot-early" aria-hidden="true"></div>
+      <div class="tl-date tl-date-early">March 2025</div>
+      <div class="tl-event">Programme call &mdash; 30-minute speaker brief</div>
+      <div class="tl-detail">Your data lead discussed LP reporting gaps and infrastructure scaling challenges for private credit volumes.</div>
+    </li>
+
+    <li class="tl-item">
+      <div class="tl-dot tl-dot-early" aria-hidden="true"></div>
+      <div class="tl-date tl-date-early">April 2025</div>
+      <div class="tl-event">Post-summit follow-up</div>
+      <div class="tl-detail">Inquiry about The Brief, upcoming roundtables, and Content Studio partnerships.</div>
+      <div class="tl-signal">First signal of interest beyond event attendance.</div>
+    </li>
+
+    <li class="tl-item">
+      <div class="tl-dot tl-dot-mid" aria-hidden="true"></div>
+      <div class="tl-date tl-date-mid">May 2025</div>
+      <div class="tl-event">LP Tech Summit &mdash; second consecutive event</div>
+      <div class="tl-detail">Attended LP infrastructure breakout. Active in Q&amp;A on regulatory reporting.</div>
+    </li>
+
+    <li class="tl-item">
+      <div class="tl-dot tl-dot-mid" aria-hidden="true"></div>
+      <div class="tl-date tl-date-mid">June 2025</div>
+      <div class="tl-event">Executive dinner</div>
+      <div class="tl-detail">Your data lead raised regulatory reporting for private credit allocations. First time this topic surfaced in a non-event setting.</div>
+    </li>
+
+    <li class="tl-item">
+      <div class="tl-dot tl-dot-mid" aria-hidden="true"></div>
+      <div class="tl-date tl-date-mid">August 2025</div>
+      <div class="tl-event">AI Summit registration &mdash; third consecutive event</div>
+      <div class="tl-detail">Three back-to-back PMF summits. No other sponsor moved at this pace without a direct pitch.</div>
+      <div class="tl-signal">Engagement velocity: top 3% of the PMF portfolio.</div>
+    </li>
+
+    <li class="tl-item">
+      <div class="tl-dot tl-dot-late" aria-hidden="true"></div>
+      <div class="tl-date tl-date-late">September 2025</div>
+      <div class="tl-event">Executive dinner #2</div>
+      <div class="tl-detail">Same regulatory reporting question raised again. Pattern confirmed across two separate rooms.</div>
+    </li>
+
+    <li class="tl-item">
+      <div class="tl-dot tl-dot-late" aria-hidden="true"></div>
+      <div class="tl-date tl-date-late">October 2025</div>
+      <div class="tl-event">Sponsor call &mdash; partnership escalation</div>
+      <div class="tl-detail">Analytics infrastructure team expanding: 3 new hires, budget approved through Q1. Interest in industry council seat and Content Studio research partnership.</div>
+      <div class="tl-signal">Budget authority confirmed. Relationship shifted from attendance to active partnership.</div>
+    </li>
+  </ol>
+
+  <!-- QUALIFYING LANGUAGE SHIFT -->
+  <div style="margin-top: 40px;">
+    <div class="ql-label">Qualifying Language Progression</div>
+    <div class="ql-track" role="figure" aria-label="Language shifted from exploring to building to needing external intelligence over 7 months">
+      <div class="ql-stage">
+        <div class="ql-word">&ldquo;exploring analytics options&rdquo;</div>
+        <div class="ql-when">Registration &middot; Mar</div>
+      </div>
+      <div class="ql-arrow" aria-hidden="true">&rarr;</div>
+      <div class="ql-stage">
+        <div class="ql-word">&ldquo;building data infrastructure&rdquo;</div>
+        <div class="ql-when">Programme call &middot; May</div>
+      </div>
+      <div class="ql-arrow" aria-hidden="true">&rarr;</div>
+      <div class="ql-stage">
+        <div class="ql-word">&ldquo;we need external intelligence&rdquo;</div>
+        <div class="ql-when">Sponsor call &middot; Oct</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENGAGEMENT DENSITY -->
+  <div class="density" role="figure" aria-label="Engagement density by month, March through October 2025">
+    <div class="density-bar">
+      <div class="density-block" style="background: rgba(155,156,163,0.25);">MAR</div>
+      <div class="density-block" style="background: rgba(155,156,163,0.18);">APR</div>
+      <div class="density-block" style="background: rgba(212,170,120,0.22);">MAY</div>
+      <div class="density-block" style="background: rgba(212,170,120,0.3);">JUN</div>
+      <div class="density-block" style="background: rgba(212,170,120,0.1);">JUL</div>
+      <div class="density-block" style="background: rgba(212,170,120,0.3);">AUG</div>
+      <div class="density-block" style="background: rgba(123,143,255,0.22);">SEP</div>
+      <div class="density-block" style="background: rgba(123,143,255,0.38);">OCT</div>
+    </div>
+    <div class="density-labels">
+      <span class="density-label">First touchpoint</span>
+      <span class="density-label">8 touchpoints across 7 months</span>
+    </div>
+  </div>
+
+  <!-- BEFORE / AFTER MIRROR -->
+  <div class="mirror" role="figure" aria-label="Before and after comparison: what PMF knew about MSCI with fragmented data versus connected intelligence">
+    <div class="mirror-watermark" aria-hidden="true">180</div>
+    <div style="text-align: right; padding-right: 20px; position: relative; z-index: 1;">
+      <div class="mirror-label mirror-label-before">Before Integration</div>
+      <div class="mirror-date">March 2025</div>
+      <div class="mirror-q">&ldquo;What do we know about MSCI?&rdquo;</div>
+      <div class="mirror-a-before">&ldquo;They&rsquo;ve been to a couple of summits. Kelly had a call &mdash; I think they&rsquo;re interested in Content Studio. Let me check.&rdquo;</div>
+      <div class="mirror-note">30 seconds of context. Assembled from memory.</div>
+    </div>
+    <div class="mirror-center">
+      <div class="mirror-line"></div>
+      <div class="mirror-badge">180 days</div>
+      <div class="mirror-line"></div>
+    </div>
+    <div style="padding-left: 20px; position: relative; z-index: 1;">
+      <div class="mirror-label mirror-label-after">After Integration</div>
+      <div class="mirror-date">October 2025</div>
+      <div class="mirror-q">&ldquo;What do we know about MSCI?&rdquo;</div>
+      <div class="mirror-a-after">3 summits, 2 sponsor calls, 1 executive dinner. Language escalated from &lsquo;exploring&rsquo; to &lsquo;need external infrastructure.&rsquo; Team expanding &mdash; 3 hires, budget confirmed. LP reporting is their top priority, shared by 4 other sponsors. Content Studio is the natural next step.</div>
+      <div class="mirror-note">Assembled in seconds. From programme calls, Granola notes, registration data, sponsor calls, and summit transcripts.</div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="ep-section-header" role="heading" aria-level="3">
+    <div class="ep-section-num" aria-hidden="true">2</div>
+    <div class="ep-section-label">What You'd Have Access To</div>
+    <div class="ep-section-line" role="presentation"></div>
+  </div>
+
+  <div class="query-row">
+    <div class="query-bar" style="background: #9B9CA3;"></div>
+    <div>
+      <div class="query-q">&ldquo;What does PMF know about our priorities?&rdquo;</div>
+      <div class="query-a">LP reporting infrastructure and regulatory compliance for private credit. Raised at 2 summits, confirmed in a sponsor call, validated by hiring pattern. Your data lead asked about it at 2 executive dinners. This is your most consistent priority across every PMF touchpoint.</div>
+      <div class="query-source">Sources: registration data, programme calls, sponsor calls, executive dinner notes</div>
+    </div>
+  </div>
+
+  <div class="query-row">
+    <div class="query-bar" style="background: #D4AA78;"></div>
+    <div>
+      <div class="query-q">&ldquo;Where do we sit relative to the market?&rdquo;</div>
+      <div class="query-a">4 other PMF sponsors raised the same LP reporting and regulatory pressure in Q3. You&rsquo;re furthest along &mdash; highest engagement velocity, most touchpoints, and the only sponsor whose qualifying language escalated organically without a direct pitch.</div>
+      <div class="query-source">Sources: cross-sponsor pattern analysis, conference transcripts, registration data</div>
+    </div>
+  </div>
+
+  <div class="query-row">
+    <div class="query-bar" style="background: #7B8FFF;"></div>
+    <div>
+      <div class="query-q">&ldquo;What opportunity is PMF seeing for us?&rdquo;</div>
+      <div class="query-a">Content Studio research partnership. Practitioner-sourced intelligence on your exact priority area, distributed through PMF&rsquo;s channels. You&rsquo;d get access to what 12 CTOs in private credit identified as the most pressing infrastructure challenge &mdash; and your name on the research.</div>
+      <div class="query-source">Sources: Content Studio programme data, industry council transcripts, sponsor calls</div>
+    </div>
+  </div>
+
+  <div class="query-row">
+    <div class="query-bar" style="background: #7B8FFF;"></div>
+    <div>
+      <div class="query-q">&ldquo;What intelligence is being generated about our space?&rdquo;</div>
+      <div class="query-a">Private credit data infrastructure is a recurring theme across PMF&rsquo;s 2025 programming. 3 summit tracks, 2 roundtables, and 6 speaker briefs touched on LP reporting. The practitioners are talking about what you&rsquo;re building. The intelligence exists &mdash; it&rsquo;s just not connected to you yet.</div>
+      <div class="query-source">Sources: summit transcripts, speaker briefs, roundtable notes, registration interest data</div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats" role="figure" aria-label="Key metrics: 8 touchpoints, 5 data sources, 180 days">
+    <div>
+      <div class="stat-num" style="color: #9B9CA3;">8</div>
+      <div class="stat-label">Touchpoints</div>
+    </div>
+    <div>
+      <div class="stat-num" style="color: #D4AA78;">5</div>
+      <div class="stat-label">Data Sources</div>
+    </div>
+    <div>
+      <div class="stat-num" style="color: #7B8FFF;">180</div>
+      <div class="stat-label">Days</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="ep-footer">
+    <div class="ep-footer-note">Illustrative demonstration using realistic PMF sponsor intelligence. Built to show what the partnership looks like when the intelligence is connected.</div>
+    <div class="ep-footer-brand">Private Markets Forum</div>
+  </footer>
+</div>
+
+</body>
+</html>
