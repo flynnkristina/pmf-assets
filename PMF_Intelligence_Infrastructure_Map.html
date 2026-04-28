@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PMF Intelligence Infrastructure | StoryEQ™</title>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #EFEEEC;
+    font-family: 'Inter', sans-serif;
+    color: #272521;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+  .container {
+    max-width: 900px;
+    width: 100%;
+  }
+  .title-block {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  .title-block h1 {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: 1px;
+    color: #272521;
+    margin-bottom: 6px;
+  }
+  .title-block .subtitle {
+    font-size: 13px;
+    color: #6B6A67;
+  }
+
+  /* Stack bar - aligned to grid columns */
+  .stack-bar {
+    display: grid;
+    grid-template-columns: 180px 1fr 200px;
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+  .stack-item {
+    background: #D8B66A;
+    border: 1.5px solid #D8B66A;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #272521;
+    letter-spacing: 0.3px;
+    text-align: center;
+  }
+
+  /* Main grid */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 180px 1fr 200px;
+    gap: 20px;
+    align-items: start;
+  }
+
+  /* Input column */
+  .inputs-col { }
+  .col-header {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .sources-header { color: #272521; }
+  .outputs-header { color: #272521; }
+  .input-item {
+    background: #FFFFFF;
+    border-radius: 5px;
+    padding: 7px 10px;
+    font-size: 11px;
+    text-align: center;
+    margin-bottom: 5px;
+  }
+  .input-pce { border: 1px solid #B54740; }
+  .input-tce { border: 1px solid #4B7081; }
+  .input-cce { border: 1px solid #272521; }
+  .input-group {
+    margin-bottom: 0;
+  }
+  .input-group-label {
+    font-size: 9px;
+    font-weight: 600;
+    color: #6B6A67;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+    text-align: center;
+  }
+
+  /* Center column - layers */
+  .layers-col { }
+
+  .layer {
+    border-radius: 8px;
+    padding: 22px 24px 20px;
+    margin-bottom: 8px;
+    position: relative;
+  }
+  /* Flow arrows from inputs → engine */
+  .layer::before {
+    content: '>';
+    position: absolute;
+    left: -16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #C8C7C3;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  /* Flow arrows from engine → outputs */
+  .layer::after {
+    content: '>';
+    position: absolute;
+    right: -16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #C8C7C3;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  /* Month badges */
+  .month-badge {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+  }
+  .layer-pce { background: #B54740; }
+  .layer-tce { background: #4B7081; }
+  .layer-cce { background: #272521; }
+
+  .layer-label {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #FFFFFF;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .layer-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 14px;
+  }
+  .layer-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.2);
+    margin-bottom: 12px;
+  }
+  .layer-bullet {
+    font-size: 11px;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.7;
+  }
+
+  /* Connector between layers */
+  .connector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 0;
+  }
+  .connector-pill {
+    background: #D8B66A;
+    color: #272521;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 5px 16px;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+  }
+  .connector-arrow {
+    color: #D8B66A;
+    font-size: 16px;
+    line-height: 1;
+    text-align: center;
+    margin-top: 2px;
+  }
+  .connector-label {
+    color: #6B6A67;
+    font-size: 9px;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 2px;
+    letter-spacing: 0.5px;
+  }
+
+  /* Pilot boxes inside CCE */
+  .pilots {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .pilot {
+    flex: 1;
+    background: rgba(255,255,255,0.12);
+    border-radius: 5px;
+    padding: 8px;
+    text-align: center;
+    font-size: 11px;
+    color: #FFFFFF;
+    font-weight: 500;
+  }
+  .pilot-pending {
+    background: none;
+    border: 1px dashed rgba(255,255,255,0.25);
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* Output column */
+  .outputs-col { }
+  .output-group {
+    margin-bottom: 0;
+  }
+  .output-group-label {
+    font-size: 9px;
+    font-weight: 600;
+    color: #6B6A67;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+    text-align: center;
+  }
+  .output-item {
+    background: #FFFFFF;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 11px;
+    text-align: center;
+    margin-bottom: 5px;
+  }
+  .output-pce { border: 1px solid #B54740; }
+  .output-tce { border: 1px solid #4B7081; }
+  .output-cce { border: 1px solid #272521; }
+
+  /* Future opportunities */
+  .future {
+    margin-top: 28px;
+    border-top: 2px dashed #D8B66A;
+    padding-top: 18px;
+    text-align: center;
+  }
+  .future-header {
+    font-size: 12px;
+    font-weight: 600;
+    color: #D8B66A;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+  .future-items {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .future-item {
+    font-size: 11px;
+    color: #6B6A67;
+  }
+
+  /* AI Constitution callout */
+  .constitution-note {
+    background: #FFFFFF;
+    border-left: 3px solid #D8B66A;
+    border-radius: 0 6px 6px 0;
+    padding: 12px 16px;
+    margin-top: 24px;
+    font-size: 11px;
+    color: #6B6A67;
+    line-height: 1.6;
+  }
+  .constitution-note strong {
+    color: #272521;
+  }
+
+  /* Responsive */
+  @media (max-width: 800px) {
+    .main-grid, .stack-bar {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="title-block">
+    <h1>INTELLIGENCE INFRASTRUCTURE</h1>
+    <div class="subtitle">Private Markets Forum x StoryEQ™</div>
+  </div>
+
+  <!-- Tech stack - aligned to grid columns, gold -->
+  <div class="stack-bar">
+    <div class="stack-item">GOOGLE DRIVE</div>
+    <div class="stack-item">CLAUDE COWORK</div>
+    <div class="stack-item">CONNECTORS<br><span style="font-size: 9px; font-weight: 500;">(Notion, notetakers, etc.)</span></div>
+  </div>
+
+  <div class="main-grid">
+
+    <!-- INPUTS - grouped by engine -->
+    <div class="inputs-col">
+      <div class="col-header sources-header">SOURCES</div>
+
+      <!-- PCE sources -->
+      <div class="input-group">
+        <div class="input-group-label">PCE SOURCES</div>
+        <div class="input-item input-pce">Existing StoryEQ data</div>
+        <div class="input-item input-pce">Podcast episodes</div>
+        <div class="input-item input-pce">Newsletters + scripts</div>
+        <div class="input-item input-pce">Conference transcripts</div>
+        <div class="input-item input-pce">Key client communications</div>
+      </div>
+
+      <!-- Spacer to bridge access gate -->
+      <div style="height: 62px;"></div>
+
+      <!-- TCE sources -->
+      <div class="input-group">
+        <div class="input-group-label">TCE SOURCES</div>
+        <div class="input-item input-tce">Communication Intelligence</div>
+        <div class="input-item input-tce">Company content corpus</div>
+        <div class="input-item input-tce">Conference transcripts</div>
+        <div class="input-item input-tce">Programme calls</div>
+      </div>
+
+      <!-- Spacer to bridge template connector -->
+      <div style="height: 52px;"></div>
+
+      <!-- CCE sources -->
+      <div class="input-group">
+        <div class="input-group-label">CCE SOURCES</div>
+        <div class="input-item input-cce">Sponsor calls</div>
+        <div class="input-item input-cce">Programme calls</div>
+        <div class="input-item input-cce">Speaker briefs</div>
+        <div class="input-item input-cce">Registration data</div>
+        <div class="input-item input-cce">Survey responses</div>
+        <div class="input-item input-cce">Granola notes</div>
+      </div>
+    </div>
+
+    <!-- LAYERS -->
+    <div class="layers-col">
+
+      <!-- PCE -->
+      <div class="layer layer-pce">
+        <div class="month-badge">Month 1</div>
+        <div class="layer-label">PERSONAL CONTEXT ENGINE (PCE)</div>
+        <div class="layer-sub">Marc's intelligence layer (informed by StoryEQ™)</div>
+        <div class="layer-divider"></div>
+        <div class="layer-bullet">
+          Strategic thinking + judgment patterns<br>
+          Communication intelligence + decision style<br>
+          Integrated brand positioning (PMF, NIF, book, podcast)<br>
+          AI Constitution (governance + usage principles)<br>
+          Calibrated against real strategic decisions
+        </div>
+      </div>
+
+      <!-- Access Gate -->
+      <div class="connector">
+        <div>
+          <div class="connector-pill">ACCESS GATE</div>
+          <div class="connector-arrow">&#x25BC;</div>
+          <div class="connector-label">What flows to the team</div>
+        </div>
+      </div>
+
+      <!-- TCE -->
+      <div class="layer layer-tce">
+        <div class="month-badge">Month 2</div>
+        <div class="layer-label">TEAM CONTENT ENGINE (TCE)</div>
+        <div class="layer-sub">PMF's team intelligence layer</div>
+        <div class="layer-divider"></div>
+        <div class="layer-bullet">
+          Company voice + communication standards<br>
+          Kelly: Content Studio + package design<br>
+          Joey: AI infrastructure + implementation<br>
+          Quality gates catch voice drift
+        </div>
+      </div>
+
+      <!-- Template connector -->
+      <div class="connector">
+        <div>
+          <div class="connector-arrow">&#x25BC;</div>
+          <div class="connector-label">REPEATABLE TEMPLATE</div>
+        </div>
+      </div>
+
+      <!-- CCE -->
+      <div class="layer layer-cce">
+        <div class="month-badge">Month 3</div>
+        <div class="layer-label">CLIENT CONTENT ENGINE (CCE)</div>
+        <div class="layer-sub">Repeatable Infrastructure Template Per Sponsor/Partner</div>
+        <div class="layer-divider"></div>
+        <div class="layer-bullet">
+          Touchpoint history + engagement context<br>
+          Qualifying language tracking<br>
+          Team notes + interaction logs
+        </div>
+        <div class="pilots">
+          <div class="pilot">MSCI</div>
+          <div class="pilot">Moody's</div>
+          <div class="pilot pilot-pending">Pilot 3</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- OUTPUTS - aligned to matching engines -->
+    <div class="outputs-col">
+      <div class="col-header outputs-header">OUTPUTS</div>
+
+      <!-- PCE outputs -->
+      <div class="output-group">
+        <div class="output-group-label">FROM PCE</div>
+        <div class="output-item output-pce">Strategic decision support</div>
+        <div class="output-item output-pce">Brand + positioning pressure tests</div>
+        <div class="output-item output-pce">Book + NIF positioning</div>
+        <div class="output-item output-pce">Sponsor negotiation context</div>
+      </div>
+
+      <!-- Spacer to bridge access gate -->
+      <div style="height: 100px;"></div>
+
+      <!-- TCE outputs -->
+      <div class="output-group">
+        <div class="output-group-label">FROM TCE</div>
+        <div class="output-item output-tce">Newsletters + scripts</div>
+        <div class="output-item output-tce">Sponsor proposals</div>
+        <div class="output-item output-tce">Event content + briefs</div>
+        <div class="output-item output-tce">Podcast episode briefs</div>
+      </div>
+
+      <!-- Spacer to bridge template connector -->
+      <div style="height: 90px;"></div>
+
+      <!-- CCE outputs -->
+      <div class="output-group">
+        <div class="output-group-label">FROM CCE</div>
+        <div class="output-item output-cce">Engagement progression</div>
+        <div class="output-item output-cce">Cross-client patterns</div>
+        <div class="output-item output-cce">Sponsor context on demand</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Future Opportunities -->
+  <div class="future">
+    <div class="future-header">FUTURE OPPORTUNITIES FOR CONTINUED ENGAGEMENT</div>
+    <div class="future-items">
+      <div class="future-item">Full portfolio rollout</div>
+      <div class="future-item">·</div>
+      <div class="future-item">Cross-client intelligence</div>
+      <div class="future-item">·</div>
+      <div class="future-item">NIF integration</div>
+      <div class="future-item">·</div>
+      <div class="future-item">Book infrastructure</div>
+    </div>
+  </div>
+
+
+</div>
+</body>
+</html>
